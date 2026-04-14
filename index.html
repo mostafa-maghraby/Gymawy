@@ -122,8 +122,14 @@
           <strong id="daysPerWeekLabel">3 days</strong>
         </label>
 
+        <label class="field">
+          <span>Session Duration (Hours per workout)</span>
+          <input type="range" id="sessionHours" min="1" max="10" step="0.5" value="1.5" />
+          <strong id="sessionHoursLabel">1.5 hours</strong>
+        </label>
+
         <div id="daysPicker" class="days-picker"></div>
-        <p class="hint">Pick exactly the same number of fixed training days.</p>
+        <p class="hint">Pick exactly the same number of fixed training days. Plans auto-fit your selected session time.</p>
 
         <div class="actions">
           <button id="generatePlanBtn" class="btn-primary">Generate AI Plan</button>
