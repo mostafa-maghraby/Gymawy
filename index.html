@@ -73,6 +73,36 @@
             </select>
           </label>
 
+          <div class="grid two">
+            <label class="field">
+              <span>Gender (optional)</span>
+              <select id="gender">
+                <option value="">Prefer not to say</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Training Experience</span>
+              <select id="experience" required>
+                <option value="">Select level</option>
+                <option value="beginner">Beginner (0-6 months)</option>
+                <option value="intermediate">Intermediate (6-24 months)</option>
+                <option value="advanced">Advanced (2+ years)</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Current Fitness & Recovery Capacity</span>
+            <select id="fitnessLevel" required>
+              <option value="">Select capacity</option>
+              <option value="low">Low (recover slowly)</option>
+              <option value="moderate">Moderate</option>
+              <option value="high">High (recover quickly)</option>
+            </select>
+          </label>
+
           <button type="submit" class="btn-primary">Analyze Body</button>
         </form>
       </section>
@@ -111,7 +141,10 @@
         <p id="weightDirection" class="weight-direction"></p>
         <p id="waterSuggestion" class="water"></p>
 
-        <button id="toProgramBtn" class="btn-primary">Start Program</button>
+        <div class="actions">
+          <button id="analysisBackBtn" class="btn-secondary" type="button">Back</button>
+          <button id="toProgramBtn" class="btn-primary" type="button">Start Program</button>
+        </div>
       </section>
 
       <section id="scheduleSection" class="card hidden">
@@ -123,16 +156,21 @@
         </label>
 
         <label class="field">
-          <span>Session Duration (Hours per workout)</span>
-          <input type="range" id="sessionHours" min="1" max="10" step="0.5" value="1.5" />
-          <strong id="sessionHoursLabel">1.5 hours</strong>
+          <span>Session Duration</span>
+          <select id="sessionHours" required>
+            <option value="1">1 hour</option>
+            <option value="2" selected>2 hours</option>
+            <option value="3">3 hours</option>
+          </select>
+          <strong id="sessionHoursLabel">2 hours</strong>
         </label>
 
         <div id="daysPicker" class="days-picker"></div>
         <p class="hint">Pick exactly the same number of fixed training days. Plans auto-fit your selected session time.</p>
 
         <div class="actions">
-          <button id="generatePlanBtn" class="btn-primary">Generate AI Plan</button>
+          <button id="scheduleBackBtn" class="btn-secondary" type="button">Back</button>
+          <button id="generatePlanBtn" class="btn-primary" type="button">Generate AI Plan</button>
         </div>
       </section>
 
@@ -140,6 +178,7 @@
         <div class="between">
           <h2>Your Weekly Program</h2>
           <div class="actions">
+            <button id="programBackBtn" class="btn-secondary" type="button">Back</button>
             <button id="regenBtn" class="btn-secondary">Regenerate</button>
             <button id="printBtn" class="btn-secondary">Download PDF</button>
           </div>
