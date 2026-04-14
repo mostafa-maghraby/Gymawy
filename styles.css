@@ -269,7 +269,7 @@ input[type="range"] {
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 720px;
+  min-width: 780px;
 }
 
 th,
