@@ -284,6 +284,20 @@ th {
   color: #bae6fd;
 }
 
+.image-action {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(18, 247, 214, 0.6);
+  color: #9dfcf0;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.image-action:hover {
+  background: rgba(18, 247, 214, 0.12);
+}
+
 .exercise-img {
   width: 62px;
   height: 44px;
