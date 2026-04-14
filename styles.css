@@ -1,6 +1,7 @@
 :root {
   --bg: #090d18;
   --card: rgba(17, 24, 39, 0.8);
+  --card-2: rgba(8, 15, 28, 0.82);
   --text: #edf2ff;
   --muted: #9ca3af;
   --primary: #12f7d6;
@@ -8,11 +9,27 @@
   --danger: #ef4444;
   --warning: #f59e0b;
   --ok: #22c55e;
+  --border: rgba(255, 255, 255, 0.08);
   --radius: 18px;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -21,6 +38,28 @@ body {
   background: radial-gradient(circle at top, #13213f 0%, var(--bg) 48%);
   color: var(--text);
   min-height: 100vh;
+  line-height: 1.45;
+}
+
+img,
+svg,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+input,
+select,
+button {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .bg-glow {
@@ -30,6 +69,7 @@ body {
   border-radius: 50%;
   z-index: -1;
   filter: blur(55px);
+  pointer-events: none;
 }
 
 .bg-glow-a {
@@ -45,6 +85,7 @@ body {
 }
 
 .app-shell {
+  width: 100%;
   max-width: 980px;
   margin: 0 auto;
   padding: 18px 14px 80px;
@@ -58,7 +99,8 @@ body {
 
 .hero h1 {
   margin: 8px 0 6px;
-  font-size: clamp(1.4rem, 5vw, 2.2rem);
+  font-size: clamp(1.45rem, 5vw, 2.2rem);
+  line-height: 1.15;
 }
 
 .hero p {
@@ -76,17 +118,26 @@ body {
 }
 
 .card {
+  width: 100%;
+  max-width: 100%;
   background: var(--card);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 16px;
   margin-top: 14px;
   backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
   animation: slide 0.35s ease;
 }
 
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .grid {
@@ -94,8 +145,16 @@ body {
   gap: 10px;
 }
 
+.grid.one {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .grid.two {
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.grid > * {
+  min-width: 0;
 }
 
 .field {
@@ -103,27 +162,28 @@ body {
   flex-direction: column;
   gap: 6px;
   margin-bottom: 10px;
+  min-width: 0;
 }
 
 .field span {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: #dbeafe;
 }
 
 input,
-select,
-button {
-  font: inherit;
-}
-
-input,
 select {
-  width: 100%;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(11, 17, 30, 0.85);
   color: var(--text);
   padding: 12px;
+  outline: none;
+}
+
+input:focus,
+select:focus {
+  border-color: rgba(86, 180, 255, 0.8);
+  box-shadow: 0 0 0 3px rgba(86, 180, 255, 0.12);
 }
 
 input[type="range"] {
@@ -132,10 +192,24 @@ input[type="range"] {
 
 .toggle-row {
   display: flex;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 10px 16px;
   padding: 12px;
   border-radius: 12px;
   background: rgba(11, 17, 30, 0.8);
+}
+
+.toggle-row label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  cursor: pointer;
+}
+
+.toggle-row input[type="radio"] {
+  width: auto;
+  margin: 0;
 }
 
 .btn-primary,
@@ -144,11 +218,10 @@ input[type="range"] {
   border-radius: 12px;
   padding: 11px 16px;
   cursor: pointer;
-  transition: 0.2s transform ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
 }
 
 .btn-primary {
-  width: 100%;
   background: linear-gradient(90deg, var(--primary), var(--primary-2));
   color: #031122;
   font-weight: 700;
@@ -164,9 +237,14 @@ input[type="range"] {
   transform: translateY(-1px);
 }
 
+.btn-primary:active,
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
 .metrics-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -174,6 +252,7 @@ input[type="range"] {
   background: rgba(9, 16, 31, 0.8);
   border-radius: 14px;
   padding: 12px;
+  min-width: 0;
 }
 
 .metric p {
@@ -184,18 +263,25 @@ input[type="range"] {
 
 .metric h3 {
   margin: 6px 0 0;
+  word-break: break-word;
 }
 
 .progress-wrap {
   margin-top: 14px;
 }
 
+.progress-wrap > p {
+  margin-bottom: 8px;
+}
+
 .bmi-track {
-  margin-top: 8px;
+  width: 100%;
+  max-width: 100%;
   height: 10px;
   border-radius: 999px;
   background: linear-gradient(90deg, #22c55e 0 40%, #f59e0b 40% 70%, #ef4444 70% 100%);
   position: relative;
+  overflow: hidden;
 }
 
 .bmi-pointer {
@@ -212,10 +298,15 @@ input[type="range"] {
 
 .bmi-labels {
   margin-top: 8px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
   font-size: 0.75rem;
   color: var(--muted);
+}
+
+.bmi-labels span {
+  text-align: center;
 }
 
 .weight-direction,
@@ -226,7 +317,7 @@ input[type="range"] {
 
 .days-picker {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   margin-top: 8px;
 }
@@ -238,6 +329,9 @@ input[type="range"] {
   padding: 10px;
   cursor: pointer;
   user-select: none;
+  background: rgba(10, 16, 28, 0.6);
+  color: var(--text);
+  min-width: 0;
 }
 
 .day-chip.selected {
@@ -250,59 +344,77 @@ input[type="range"] {
   margin-bottom: 10px;
 }
 
+.plan-meta p {
+  margin: 0 0 8px;
+  word-break: break-word;
+}
+
 .day-card {
-  background: rgba(8, 15, 28, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-2);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 12px;
   margin-bottom: 14px;
 }
 
+.day-card-head {
+  margin-bottom: 10px;
+}
+
 .day-card h3 {
   margin: 0 0 4px;
+  line-height: 1.2;
 }
 
 .scroll-x {
+  width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
 }
 
 table {
   width: 100%;
+  min-width: 760px;
   border-collapse: collapse;
-  min-width: 780px;
 }
 
 th,
 td {
   text-align: left;
-  padding: 8px;
+  padding: 10px 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 0.86rem;
+  vertical-align: top;
 }
 
 th {
   color: #bae6fd;
+  white-space: nowrap;
+}
+
+td {
+  word-break: break-word;
 }
 
 .image-action {
-  display: inline-block;
-  padding: 5px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 66px;
+  padding: 6px 10px;
   border-radius: 8px;
   border: 1px solid rgba(18, 247, 214, 0.6);
   color: #9dfcf0;
   text-decoration: none;
   font-size: 0.8rem;
+  white-space: nowrap;
 }
 
 .image-action:hover {
   background: rgba(18, 247, 214, 0.12);
-}
-
-.exercise-img {
-  width: 62px;
-  height: 44px;
-  border-radius: 8px;
-  object-fit: cover;
 }
 
 .between {
@@ -312,9 +424,23 @@ th {
   gap: 8px;
 }
 
+.between-stack {
+  align-items: flex-start;
+}
+
 .actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
+}
+
+.actions > * {
+  width: auto;
+  flex: 1 1 180px;
+}
+
+.program-actions {
+  width: 100%;
 }
 
 .health-green {
@@ -329,15 +455,109 @@ th {
   color: var(--danger);
 }
 
+@media (max-width: 767px) {
+  .app-shell {
+    padding: 14px 12px 42px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .actions,
+  .between {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions > * {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .between-stack h2 {
+    margin-bottom: 4px;
+  }
+
+  .days-picker {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bmi-labels {
+    font-size: 0.7rem;
+    gap: 4px;
+  }
+
+  table {
+    min-width: 680px;
+  }
+
+  th,
+  td {
+    padding: 8px 7px;
+    font-size: 0.8rem;
+  }
+}
+
 @media (min-width: 768px) {
   .app-shell {
     padding: 28px 22px 90px;
   }
+
   .grid.two {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
   .days-picker {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .program-actions {
+    width: auto;
+  }
+
+  .program-actions > * {
+    flex: 0 0 auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-shell {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+    color: #111827;
+  }
+
+  .bg-glow,
+  .actions,
+  .badge {
+    display: none !important;
+  }
+
+  .app-shell {
+    max-width: none;
+    padding: 0;
+  }
+
+  .card,
+  .day-card {
+    border: 1px solid #d1d5db;
+    box-shadow: none;
+    background: #fff;
+  }
+
+  table {
+    min-width: 0;
   }
 }
 
